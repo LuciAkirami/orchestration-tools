@@ -3,6 +3,9 @@ from prefect import flow, task
 # flows can be nested within each other
 
 
+# if the task fails, you can specify to retry the task with "retries" variable and
+# giving it the number of times it can retry. You can also set a delay between the
+# retries with the "retry_delays_seconds" variable and giving the #no. of seconds in integer
 @task()
 def flow2_task(log_prints=True):
     print("I'm a task executed by Flow 2")
