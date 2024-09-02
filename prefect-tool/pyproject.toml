@@ -1,0 +1,20 @@
+[project]
+name = "prefect-tool"
+description = "An introductory project to Prefect"
+version = "0.1.0"
+authors = [
+    { name = "Luci" }
+]
+dependencies = [
+    "prefect > 2.13.2",
+    "httpx ~= 0.25.0",
+    "psycopg2-binary ~= 2.9.7"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit"
+]
+
+#[project.scripts]
+#pipeline = "pipeline.01intro:main"

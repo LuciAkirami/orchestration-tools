@@ -1,3 +1,6 @@
 # top level
 .venv
 .env
+
+# prefect-tool
+*/prefect_tool.egg-info
