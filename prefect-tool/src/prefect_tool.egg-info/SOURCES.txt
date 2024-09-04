@@ -1,6 +1,14 @@
 pyproject.toml
-src/pipeline/01intro.py
+src/pipeline/01-intro.py
+src/pipeline/02-nested-flows.py
+src/pipeline/03-change-names-and-states.py
+src/pipeline/04-async-tasks.py
+src/pipeline/05-timeout-retry.py
+src/pipeline/06-caching-tasks.py
+src/pipeline/07-concurrency.py
 src/pipeline/test.py
+src/pipeline/prefect-tasks-run/01-task-worker.py
+src/pipeline/prefect-tasks-run/02-call-deferred-task.py
 src/prefect_tool.egg-info/PKG-INFO
 src/prefect_tool.egg-info/SOURCES.txt
 src/prefect_tool.egg-info/dependency_links.txt
