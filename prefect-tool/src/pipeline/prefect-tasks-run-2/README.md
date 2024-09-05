@@ -68,3 +68,78 @@ You can see the task run in the UI. If you’re using a self-hosted Prefect serv
 To run tasks in a separate process or container, start a task worker, similar to how you would run a Celery worker or an arq worker. The task worker continually receives scheduled tasks to execute from Prefect’s API, executes them, and reports the results back to the API. Run a task worker by passing tasks into the prefect.task_worker.serve() method.
 ​
 ### Step 1: Define the task and task worker in a file
+
+```python
+from prefect import task
+from prefect.task_worker import serve
+
+
+@task
+def my_background_task(name: str):
+    print(f"Hello, {name}!")
+
+
+if __name__ == "__main__":
+    serve(my_background_task)
+```
+
+### Step 2: Start the task worker by running the script in the terminal
+
+```python
+python task_worker.py
+```
+
+The task worker is waiting for runs of the my_background_task task.
+
+​
+### Step 3: Create a file and save the following code in it:
+
+task_scheduler.py
+```python
+from task_worker import my_background_task
+
+
+if __name__ == "__main__":
+    my_background_task.delay("Agrajag")
+```
+
+### Step 4: Open another terminal and run the script
+
+```
+python task_scheduler.py
+```
+
+Note that we return a "future" from the `delay` method. You can use this object to wait for the task to complete with `wait()` and to retrieve its result with `result()`.
+We can also see the task run's UUID and other information about the task run.
+
+Step 5: See the task run in the UI.
+
+Open Prefect's UI and navigate to the Runs page. Select "Tasks" to see a list of task runs. You should see your new task in the list.
+
+Step 6: You can use multiple task workers to run tasks in parallel.
+
+Start another instance of the task worker. In another terminal run:
+
+```bash
+python task_worker.py
+```
+
+Step 7: Submit multiple tasks to the task worker.
+
+Modify the `task_submitter.py` file to submit multiple tasks to the task worker with different inputs:
+
+```python
+from tasks import my_background_task
+
+if __name__ == "__main__":
+    my_background_task.delay("Ford")
+    my_background_task.delay("Prefect")
+    my_background_task.delay("Slartibartfast")
+```
+
+Run the file and watch the work get distributed across both task workers!
+
+Step 8: Shut down the task servers with *control* + *c*.
+
+Alright, you can submit tasks to multiple Prefect task workers running in the background!
+This is cool because we can observe these tasks executing in parallel and very quickly with web sockets - no polling required.
